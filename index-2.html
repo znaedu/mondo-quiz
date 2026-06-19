@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#0a0800">
+<title>MONDO QUIZ — Le Savoir Vaut de l'Or</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noir:#0a0800;--noir2:#110e00;--or:#FFD700;--or2:#FFA500;--rouge:#FF1744;
+  --blanc:#FFFEF0;--gris:#2a2600;--gris2:#1a1500;
+  --g-or:linear-gradient(135deg,#FFD700,#FFA500);
+  --g-rouge:linear-gradient(135deg,#FF1744,#FF6B00);
+  --g-sombre:linear-gradient(180deg,#0a0800,#1a1200);
+  --text:#FFFEF0;--muted:rgba(255,254,240,.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--noir);color:var(--text);
+  min-height:100vh;overflow-x:hidden}
+
+/* Fond étoilé animé */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,215,0,.06) 0%,transparent 60%),
+  radial-gradient(ellipse 40% 40% at 20% 80%,rgba(255,23,68,.05) 0%,transparent 50%)}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;background:#FFD700;border-radius:50%;animation:twinkle linear infinite}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(1)}50%{opacity:.8;transform:scale(1.3)}}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:300;
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,8,0,.92);border-bottom:1px solid rgba(255,215,0,.15);
+  backdrop-filter:blur(20px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.logo-emblem{width:38px;height:38px;border-radius:50%;background:var(--g-or);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  box-shadow:0 0 14px rgba(255,215,0,.4),0 0 28px rgba(255,215,0,.15);flex-shrink:0}
+.logo-text .logo-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;
+  color:var(--or);letter-spacing:3px;line-height:1;
+  text-shadow:0 0 20px rgba(255,215,0,.4)}
+.logo-text .logo-tag{font-family:'Space Mono',monospace;font-size:.35rem;
+  color:var(--muted);letter-spacing:3px;text-transform:uppercase;display:block}
+.hdr-r{display:flex;gap:8px;align-items:center}
+.btn-gold{background:var(--g-or);border:none;color:#0a0800;padding:9px 18px;
+  border-radius:50px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.78rem;
+  cursor:pointer;box-shadow:0 4px 14px rgba(255,215,0,.3)}
+.btn-gold:active{transform:scale(.97)}
+.btn-ghost{background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);
+  color:var(--or);border-radius:50px;padding:9px 16px;font-family:'Outfit',sans-serif;
+  font-weight:600;font-size:.78rem;cursor:pointer}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px 16px 80px;overflow:hidden}
+.hero-crown{font-size:2.5rem;margin-bottom:12px;
+  animation:float 3s ease-in-out infinite;display:block}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--or);
+  letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;opacity:.8}
+.hero-h{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,18vw,9rem);line-height:.88;letter-spacing:4px;margin-bottom:6px;
+  color:var(--or);text-shadow:0 0 60px rgba(255,215,0,.3),0 0 120px rgba(255,215,0,.1)}
+.hero-sub-title{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.4rem,6vw,3rem);letter-spacing:6px;color:var(--blanc);
+  text-shadow:0 2px 20px rgba(0,0,0,.5);margin-bottom:18px}
+.hero-desc{font-size:clamp(.85rem,2.5vw,1rem);color:var(--muted);
+  max-width:420px;line-height:1.9;margin-bottom:36px;font-weight:300}
+.hero-desc b{color:var(--or);font-weight:700}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:48px}
+.btn-play{background:var(--g-or);border:none;color:#0a0800;
+  padding:16px 36px;border-radius:50px;font-family:'Bebas Neue',sans-serif;
+  font-size:1.2rem;letter-spacing:3px;cursor:pointer;
+  box-shadow:0 8px 32px rgba(255,215,0,.4),0 0 0 1px rgba(255,215,0,.2);
+  transition:all .3s}
+.btn-play:active{transform:scale(.97)}
+.btn-demo{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);
+  color:var(--blanc);padding:16px 30px;border-radius:50px;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer}
+.btn-demo:active{background:rgba(255,255,255,.1)}
+
+/* STATS STRIP */
+.stats-strip{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--or);
+  line-height:1;text-shadow:0 0 20px rgba(255,215,0,.3)}
+.stat-l{font-family:'Space Mono',monospace;font-size:.52rem;color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;background:rgba(255,215,0,.15);align-self:stretch;margin:4px 0}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  color:var(--or);font-family:'Space Mono',monospace;font-size:.5rem;
+  letter-spacing:3px;text-transform:uppercase;opacity:.5;
+  animation:bob 2.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.scroll-hint::after{content:'';width:1px;height:30px;
+  background:linear-gradient(to bottom,var(--or),transparent)}
+
+/* SECTION COMMONS */
+.sec{position:relative;z-index:1;padding:60px 16px;max-width:1100px;margin:0 auto}
+.sec-eyebrow{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--or);
+  letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;opacity:.7}
+.sec-h{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,8vw,4rem);letter-spacing:3px;color:var(--blanc);
+  line-height:.95;margin-bottom:10px}
+.sec-h span{color:var(--or)}
+.sec-p{color:var(--muted);font-size:.88rem;line-height:1.85;max-width:480px;margin-bottom:32px}
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(255,215,0,.15),transparent);margin:0 16px}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.step{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);
+  border-radius:20px;padding:20px;position:relative;overflow:hidden}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--g-or)}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(255,215,0,.06);
+  position:absolute;top:8px;right:12px;line-height:1;letter-spacing:2px}
+.step-ico{font-size:1.6rem;margin-bottom:10px}
+.step-ti{font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;
+  margin-bottom:5px;color:var(--or)}
+.step-de{font-size:.76rem;color:var(--muted);line-height:1.7}
+
+/* PAYS GRID */
+.pays-intro{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);
+  border-radius:20px;padding:20px;margin-bottom:16px}
+.pays-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px}
+.pays-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;
+  transition:all .25s}
+.pays-card:hover,.pays-card:active{background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.3);
+  transform:scale(1.05)}
+.pays-flag{font-size:1.4rem;margin-bottom:3px}
+.pays-nm{font-size:.58rem;color:var(--muted);font-weight:600;line-height:1.3}
+
+/* MISE SYSTEM */
+.mise-section{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);
+  border-radius:24px;padding:22px;margin-bottom:16px}
+.mise-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;
+  color:var(--or);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.mise-opt{background:rgba(255,255,255,.04);border:2px solid rgba(255,215,0,.12);
+  border-radius:12px;padding:11px 6px;text-align:center;cursor:pointer;transition:all .2s}
+.mise-opt:active{transform:scale(.97)}
+.mise-opt.sel{border-color:var(--or);background:rgba(255,215,0,.1)}
+.mise-amt{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--or);
+  letter-spacing:1px;line-height:1}
+.mise-lbl{font-size:.58rem;color:var(--muted);margin-top:2px}
+.solde-bar{background:rgba(255,255,255,.05);border:1px solid rgba(255,215,0,.1);
+  border-radius:12px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.solde-lbl{font-size:.72rem;color:var(--muted);font-family:'Space Mono',monospace}
+.solde-amt{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--or);
+  letter-spacing:2px}
+
+/* TIMER CIRCULAIRE — LA SIGNATURE */
+.timer-wrap{position:relative;width:80px;height:80px;margin:0 auto 14px;flex-shrink:0}
+.timer-svg{transform:rotate(-90deg);width:80px;height:80px}
+.timer-bg{fill:none;stroke:rgba(255,215,0,.1);stroke-width:5}
+.timer-progress{fill:none;stroke:var(--or);stroke-width:5;stroke-linecap:round;
+  stroke-dasharray:220;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear,stroke .3s}
+.timer-danger .timer-progress{stroke:var(--rouge);animation:danger-pulse .5s ease-in-out infinite alternate}
+@keyframes danger-pulse{from{filter:drop-shadow(0 0 4px var(--rouge))}to{filter:drop-shadow(0 0 12px var(--rouge))}}
+.timer-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--or);letter-spacing:2px}
+.timer-danger .timer-text{color:var(--rouge)}
+
+/* QUESTION CARD */
+.q-card{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.02));
+  border:1px solid rgba(255,215,0,.15);border-radius:24px;padding:22px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.q-pays{display:flex;align-items:center;gap:7px}
+.q-flag{font-size:1.4rem}
+.q-pays-nm{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--or);
+  letter-spacing:2px;text-transform:uppercase}
+.q-mise-display{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--or);
+  letter-spacing:2px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.2);
+  border-radius:50px;padding:4px 13px}
+.q-text{font-family:'Outfit',sans-serif;font-weight:700;font-size:.97rem;
+  line-height:1.55;color:var(--blanc);margin-bottom:16px}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.q-opt{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);
+  border-radius:13px;padding:13px 16px;cursor:pointer;font-size:.88rem;
+  font-family:'Outfit',sans-serif;color:var(--text);text-align:left;width:100%;
+  display:flex;align-items:center;gap:10px;transition:all .2s}
+.q-opt:active{transform:scale(.99)}
+.q-opt:hover{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.06)}
+.q-opt-letter{width:26px;height:26px;border-radius:50%;background:rgba(255,215,0,.1);
+  border:1px solid rgba(255,215,0,.2);display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--or);flex-shrink:0;letter-spacing:1px}
+.q-opt.correct{border-color:var(--green,#10B981);background:rgba(16,185,129,.1)}
+.q-opt.correct .q-opt-letter{background:rgba(16,185,129,.2);border-color:#10B981;color:#10B981}
+.q-opt.wrong{border-color:var(--rouge);background:rgba(255,23,68,.08)}
+.q-opt.wrong .q-opt-letter{background:rgba(255,23,68,.15);border-color:var(--rouge);color:var(--rouge)}
+
+/* MULTIPLIER DISPLAY */
+.mult-track{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:10px 0;margin-bottom:12px;
+  scrollbar-width:none}
+.mult-track::-webkit-scrollbar{display:none}
+.mult-node{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+.mult-circle{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,215,0,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.75rem;color:var(--muted);
+  letter-spacing:1px;transition:all .3s}
+.mult-circle.done{background:rgba(255,215,0,.15);border-color:var(--or);color:var(--or);
+  box-shadow:0 0 10px rgba(255,215,0,.2)}
+.mult-circle.current{background:var(--g-or);border-color:var(--or);color:#0a0800;
+  box-shadow:0 0 14px rgba(255,215,0,.4);animation:pulse-gold 1s ease-in-out infinite alternate}
+@keyframes pulse-gold{from{box-shadow:0 0 8px rgba(255,215,0,.3)}to{box-shadow:0 0 20px rgba(255,215,0,.6)}}
+.mult-amt{font-family:'Space Mono',monospace;font-size:.5rem;color:var(--muted)}
+.mult-amt.active{color:var(--or)}
+.mult-line{width:20px;height:1px;background:rgba(255,215,0,.15);flex-shrink:0;margin-bottom:14px}
+.mult-line.done{background:rgba(255,215,0,.4)}
+
+/* GAME OVER / WIN */
+.result-card{background:linear-gradient(135deg,rgba(255,23,68,.08),rgba(255,215,0,.04));
+  border:1px solid rgba(255,23,68,.2);border-radius:24px;padding:28px;text-align:center}
+.result-card.win{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,165,0,.06));
+  border-color:rgba(255,215,0,.3)}
+.result-ico{font-size:3rem;margin-bottom:12px;display:block}
+.result-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;
+  margin-bottom:6px}
+.result-title.win{color:var(--or)}
+.result-title.lose{color:var(--rouge)}
+.result-amt{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:4px;margin-bottom:4px}
+.result-amt.win{color:var(--or);text-shadow:0 0 30px rgba(255,215,0,.4)}
+.result-amt.lose{color:var(--rouge)}
+.result-sub{font-size:.8rem;color:var(--muted);margin-bottom:18px;line-height:1.7}
+
+/* MODAL */
+.mover{position:fixed;inset:0;z-index:500;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(20px)}
+.mover.on{display:flex;animation:mFI .2s}
+@keyframes mFI{from{opacity:0}to{opacity:1}}
+.modal{background:linear-gradient(160deg,#1a1200,#0a0800);
+  border:1px solid rgba(255,215,0,.15);border-radius:28px 28px 0 0;
+  width:100%;max-width:640px;max-height:93vh;overflow-y:auto;
+  padding:22px 18px 52px;animation:mUp .36s cubic-bezier(.34,1.56,.64,1);position:relative}
+@keyframes mUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.m-hdl{width:36px;height:4px;background:rgba(255,215,0,.2);border-radius:2px;margin:0 auto 18px}
+.m-x{position:absolute;top:14px;right:14px;width:30px;height:30px;
+  background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.82rem;color:var(--muted)}
+.m-x:active{background:rgba(255,215,0,.15)}
+.modal h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;
+  color:var(--or);margin-bottom:7px}
+.m-desc{color:var(--muted);font-size:.83rem;line-height:1.75;margin-bottom:16px}
+
+/* DEPOSIT MODAL */
+.dep-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}
+.dep-opt{background:rgba(255,215,0,.05);border:2px solid rgba(255,215,0,.1);
+  border-radius:12px;padding:11px 6px;text-align:center;cursor:pointer;transition:all .2s}
+.dep-opt:active{transform:scale(.97)}
+.dep-opt.sel{border-color:var(--or);background:rgba(255,215,0,.1)}
+.dep-amt-big{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--or);letter-spacing:1px}
+.dep-lbl{font-size:.6rem;color:var(--muted);margin-top:1px}
+.auth-in{width:100%;background:rgba(255,215,0,.05);border:1.5px solid rgba(255,215,0,.15);
+  border-radius:11px;color:var(--text);padding:12px 14px;font-family:'Outfit',sans-serif;
+  font-size:.88rem;outline:none;margin-bottom:9px;-webkit-appearance:none}
+.auth-in:focus{border-color:var(--or)}
+.auth-in::placeholder{color:var(--muted)}
+.auth-in option{background:#1a1200}
+.btn-action{width:100%;background:var(--g-or);border:none;color:#0a0800;padding:14px;
+  border-radius:12px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  letter-spacing:3px;cursor:pointer;box-shadow:0 6px 20px rgba(255,215,0,.3);margin-top:4px}
+.btn-action:active{transform:scale(.98)}
+.btn-action:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-outline{width:100%;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);
+  color:var(--or);padding:12px;border-radius:12px;font-family:'Outfit',sans-serif;
+  font-weight:600;font-size:.88rem;cursor:pointer;margin-top:8px}
+
+/* TOAST */
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:var(--g-or);color:#0a0800;padding:10px 20px;border-radius:50px;
+  font-weight:700;font-size:.8rem;z-index:9999;
+  transition:transform .34s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;
+  box-shadow:0 8px 24px rgba(255,215,0,.3);pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.toast.red{background:var(--g-rouge);color:#fff}
+
+/* LEADERBOARD */
+.lb-wrap{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);border-radius:24px;padding:20px}
+.lb-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.lb-item:last-child{border-bottom:none}
+.lb-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.85rem;flex-shrink:0;letter-spacing:1px}
+.lb-rank.r1{background:var(--g-or);color:#0a0800;box-shadow:0 0 12px rgba(255,215,0,.3)}
+.lb-rank.r2{background:linear-gradient(135deg,#C0C0C0,#9CA3AF);color:#000}
+.lb-rank.r3{background:linear-gradient(135deg,#CD7F32,#92400E);color:#fff}
+.lb-rank.rn{background:rgba(255,255,255,.08);color:var(--muted)}
+.lb-name{flex:1;font-weight:600;font-size:.85rem}
+.lb-pays{font-size:.65rem;color:var(--muted)}
+.lb-gain{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--or);letter-spacing:1px}
+
+/* RESPONSIVE */
+@media(max-width:420px){
+  .hero-h{font-size:3.5rem}
+  .steps{grid-template-columns:1fr}
+  .modal{padding:18px 14px 48px}
+  .mult-circle{width:30px;height:30px;font-size:.65rem}
+  .mult-line{width:12px}
+}
+
+/* ANTI-SCREENSHOT & ANTI-COPY PROTECTION */
+.q-card, .q-text, .q-options, #questionCard {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Watermark overlay on question */
+#questionCard::before {
+  content: 'MONDO QUIZ · SESSION PROTÉGÉE';
+  position: absolute;
+  top: 50%;left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: 'Space Mono', monospace;
+  font-size: .55rem;
+  color: rgba(255,215,0,.04);
+  letter-spacing: 4px;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* Blur overlay when focus lost */
+.blur-overlay {
+  position: fixed;inset: 0;z-index: 9000;
+  background: rgba(0,0,0,.97);
+  display: none;
+  align-items: center;justify-content: center;
+  flex-direction: column;gap: 16px;
+  backdrop-filter: blur(20px);
+}
+.blur-overlay.on { display: flex; }
+.blur-msg {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;letter-spacing: 4px;
+  color: var(--rouge);text-align: center;
+}
+.blur-sub {
+  font-size: .8rem;color: var(--muted);
+  text-align: center;line-height: 1.8;max-width: 280px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
+    <div class="logo-emblem">🌍</div>
+    <div class="logo-text">
+      <div class="logo-name">MONDO QUIZ</div>
+      <small class="logo-tag">Le savoir vaut de l'or · Monde entier</small>
+    </div>
+  </a>
+  <div class="hdr-r">
+    <button class="btn-ghost" onclick="openM('depot')" id="hdrSolde" style="display:none">💰 <span id="hdrSoldeAmt">0</span> F</button>
+    <button class="btn-gold" onclick="openM('auth')">Jouer →</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-crown">🌍</span>
+  <div class="hero-eyebrow">Quiz Culture Générale · 195 Pays · Argent Réel</div>
+  <h1 class="hero-h">MONDO<br>QUIZ</h1>
+  <div class="hero-sub-title">Le Savoir Vaut de l'Or</div>
+  <p class="hero-desc">
+    Une question. Un chrono. Votre réponse double votre mise.<br>
+    <b>25 FCFA → 50 → 100 → 200 → 400 → 800…</b><br>
+    Mais une seule erreur — et tout s'arrête.
+  </p>
+  <div class="hero-btns">
+    <button class="btn-play" onclick="openM('auth')">🎯 JOUER MAINTENANT</button>
+    <button class="btn-demo" onclick="goSec('comment')">Comment ça marche ?</button>
+  </div>
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-n">196</div><div class="stat-l">Pays</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-n">10s</div><div class="stat-l">Par question</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-n">×2</div><div class="stat-l">À chaque bonne réponse</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-n">20K</div><div class="stat-l">Mise max (FCFA)</div></div>
+  </div>
+  <div class="scroll-hint">Découvrir</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COMMENT ÇA MARCHE -->
+<section class="sec" id="comment">
+  <div class="sec-eyebrow">Le principe</div>
+  <h2 class="sec-h">Simple. Rapide.<br><span>Addictif.</span></h2>
+  <p class="sec-p">Pas de chance ici — seulement votre culture générale. Chaque seconde compte.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-ico">💰</div>
+      <div class="step-ti">Déposez & Misez</div>
+      <div class="step-de">Dépôt min 200 FCFA · max 20 000 FCFA. Choisissez votre mise de départ : 25, 50, 100, 200, 500 ou 1000 FCFA.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-ico">🌍</div>
+      <div class="step-ti">Choisissez un pays</div>
+      <div class="step-de">196 pays disponibles. Culture générale, histoire, géographie, personnalités célèbres de chaque nation.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-ico">⏱️</div>
+      <div class="step-ti">10 secondes chrono</div>
+      <div class="step-de">Le chronomètre tourne. Pas le temps de chercher ailleurs. Soit vous savez, soit vous perdez. C'est la règle.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-ico">💎</div>
+      <div class="step-ti">Doublez à chaque bonne réponse</div>
+      <div class="step-de">Bonne réponse = mise × 2. Encaissez quand vous voulez. Ou continuez pour multiplier vos gains.</div>
+    </div>
+  </div>
+  <div style="background:rgba(255,23,68,.08);border:1px solid rgba(255,23,68,.2);border-radius:16px;padding:16px;margin-top:14px">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--rouge);margin-bottom:5px">⚠️ RÈGLE D'OR</div>
+    <p style="font-size:.8rem;color:var(--muted);line-height:1.75">Une mauvaise réponse = partie terminée = mise perdue. Le chronomètre de 10 secondes ne vous laisse aucune chance de consulter un autre outil. Soit la réponse est dans votre tête, soit elle ne l'est pas.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DÉMO INTERACTIVE -->
+<section class="sec" id="demo">
+  <div class="sec-eyebrow">Démonstration</div>
+  <h2 class="sec-h">Testez votre<br><span>culture générale</span></h2>
+  <p class="sec-p">Version démo gratuite. Choisissez un pays et commencez !</p>
+
+  <!-- SOLDE DEMO -->
+  <div class="solde-bar" style="margin-bottom:12px">
+    <div>
+      <div class="solde-lbl">SOLDE DÉMO</div>
+      <div class="solde-amt" id="soldeDemo">5 000 F</div>
+    </div>
+    <div style="text-align:right">
+      <div class="solde-lbl">GAINS SESSION</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#10B981;letter-spacing:2px" id="gainsDemo">+0 F</div>
+    </div>
+  </div>
+
+  <!-- MULTIPLICATEUR -->
+  <div style="background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);border-radius:16px;padding:14px;margin-bottom:12px">
+    <div style="font-family:'Space Mono',monospace;font-size:.56rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px">Progression des gains</div>
+    <div class="mult-track" id="multTrack"></div>
+  </div>
+
+  <!-- CHOIX PAYS -->
+  <div id="paysSection">
+    <div class="pays-intro">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--or)">🌍 CHOISISSEZ VOTRE PAYS</div>
+        <div style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted)">196 pays</div>
+      </div>
+      <input type="text" id="paysSearch" class="auth-in" placeholder="🔎 Rechercher un pays (ex: Japon, Bénin...)" style="margin-bottom:10px" oninput="filterPays(this.value)">
+      <div class="pays-grid" id="paysGrid" style="max-height:280px;overflow-y:auto;padding-right:2px"></div>
+      <div id="paysNoResult" style="display:none;text-align:center;padding:14px;color:var(--muted);font-size:.78rem">Aucun pays trouvé.</div>
+    </div>
+
+    <!-- MISE -->
+    <div class="mise-section">
+      <div class="mise-title">💰 VOTRE MISE DE DÉPART</div>
+      <div class="mise-grid">
+        <div class="mise-opt sel" onclick="selMise(this,25)"><div class="mise-amt">25F</div><div class="mise-lbl">Mise min</div></div>
+        <div class="mise-opt" onclick="selMise(this,50)"><div class="mise-amt">50F</div><div class="mise-lbl">Prudent</div></div>
+        <div class="mise-opt" onclick="selMise(this,100)"><div class="mise-amt">100F</div><div class="mise-lbl">Standard</div></div>
+        <div class="mise-opt" onclick="selMise(this,200)"><div class="mise-amt">200F</div><div class="mise-lbl">Confiant</div></div>
+        <div class="mise-opt" onclick="selMise(this,500)"><div class="mise-amt">500F</div><div class="mise-lbl">Audacieux</div></div>
+        <div class="mise-opt" onclick="selMise(this,1000)"><div class="mise-amt">1000F</div><div class="mise-lbl">Expert</div></div>
+      </div>
+      <button class="btn-action" id="startBtn" onclick="startGame()" disabled>CHOISISSEZ UN PAYS D'ABORD</button>
+    </div>
+  </div>
+
+  <!-- ZONE DE JEU -->
+  <div id="gameZone" style="display:none">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <div class="timer-wrap">
+        <svg class="timer-svg" viewBox="0 0 80 80">
+          <circle class="timer-bg" cx="40" cy="40" r="35"/>
+          <circle class="timer-progress" id="timerCircle" cx="40" cy="40" r="35"/>
+        </svg>
+        <div class="timer-text" id="timerText">10</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase">Question <span id="qNum">1</span></div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--or);letter-spacing:2px" id="qPaysBadge">🌍 Pays</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:.9rem;color:var(--muted);letter-spacing:1px">Mise actuelle : <span id="miseActuelle" style="color:var(--or)">25 F</span></div>
+      </div>
+      <button onclick="cashout()" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#10B981;border-radius:50px;padding:8px 14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.72rem;cursor:pointer;white-space:nowrap">💸 Encaisser</button>
+    </div>
+    <div class="q-card" id="questionCard"></div>
+  </div>
+
+  <!-- RÉSULTAT -->
+  <div id="resultZone" style="display:none"></div>
+</section>
+
+
+<div class="divider"></div>
+
+<!-- GLOBE SECTION — Questions Mondiales -->
+<section class="sec" id="globe">
+  <div class="sec-eyebrow">Catégorie Spéciale</div>
+  <h2 class="sec-h">🌐 Quiz <span>Monde Entier</span></h2>
+  <p class="sec-p">Géographie physique, Antiquité, grandes civilisations, conquêtes maritiales et spatiales. Questions qui transcendent les frontières.</p>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('geo')">
+      <div class="step-ico">🏔️</div>
+      <div class="step-ti">Géographie Physique</div>
+      <div class="step-de">Détroits, abysses, falaises, monolithes, mers, océans, déserts, forêts, ères géologiques...</div>
+    </div>
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('antiquite')">
+      <div class="step-ico">🏛️</div>
+      <div class="step-ti">Antiquité & Civilisations</div>
+      <div class="step-de">Empires, dynasties, royaumes, tribus, conquêtes maritimes, grandes familles...</div>
+    </div>
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('arts')">
+      <div class="step-ico">🎨</div>
+      <div class="step-ti">Arts & Culture Mondiale</div>
+      <div class="step-de">Peintres, sculpteurs, musiciens, acteurs, chanteurs légendaires du monde entier...</div>
+    </div>
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('sport')">
+      <div class="step-ico">⚽</div>
+      <div class="step-ti">Sport & Records Mondiaux</div>
+      <div class="step-de">Stars sportives, records, stades FIFA, Jeux Olympiques, champions du monde...</div>
+    </div>
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('guerres')">
+      <div class="step-ico">⚔️</div>
+      <div class="step-ti">Guerres & Conflits</div>
+      <div class="step-de">2 Guerres Mondiales, Corée, Vietnam, génocides, apartheid, guerre de Sécession...</div>
+    </div>
+    <div class="step" style="cursor:pointer" onclick="startGlobeCategory('espace')">
+      <div class="step-ico">🚀</div>
+      <div class="step-ti">Espace & Découvertes</div>
+      <div class="step-de">Conquête spatiale, grandes découvertes maritimes, géants des mers, exploration...</div>
+    </div>
+  </div>
+  
+  <div style="background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.12);border-radius:18px;padding:16px">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--or);margin-bottom:8px">📋 THÈMES PAR PAYS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🏔️ Relief & Géographie</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🌊 Hydrographie</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🎵 Musique & Arts</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">👥 Ethnies & Langues</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🛣️ Axes routiers</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">⚽ Stades FIFA</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🏆 Stars sportives</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">📚 Alphabétisation</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🗿 Statues & Monuments</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">✈️ Aéroports & Ports</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🎓 Universités</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🚩 Drapeaux & Hymnes</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">👑 Héros & Martyrs</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🏛️ Présidents & Mandats</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">⚔️ Guerres & Conflits</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🥷 Vikings · Samouraïs · Kamikazes</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🥋 Arts Martiaux</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">👑 Monarchies & Dynasties</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">🕊️ Religions & Croyances</span>
+      <span style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.15);border-radius:50px;padding:3px 10px;font-size:.62rem;color:var(--muted)">⛏️ Mines & Ressources</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLASSEMENT -->
+<section class="sec" id="classement">
+  <div class="sec-eyebrow">Top joueurs</div>
+  <h2 class="sec-h">Meilleurs gains<br><span>du jour</span></h2>
+  <div class="lb-wrap">
+    <div class="lb-item"><div class="lb-rank r1">1</div><div><div class="lb-name">Kossi A.</div><div class="lb-pays">🇧🇯 Bénin · France</div></div><div class="lb-gain">+47 200 F</div></div>
+    <div class="lb-item"><div class="lb-rank r2">2</div><div><div class="lb-name">Aminata D.</div><div class="lb-pays">🇧🇯 Bénin · Japon</div></div><div class="lb-gain">+32 000 F</div></div>
+    <div class="lb-item"><div class="lb-rank r3">3</div><div><div class="lb-name">Jean-Paul M.</div><div class="lb-pays">🇧🇯 Bénin · Brésil</div></div><div class="lb-gain">+18 400 F</div></div>
+    <div class="lb-item"><div class="lb-rank rn">4</div><div><div class="lb-name">Fatou K.</div><div class="lb-pays">🇸🇳 Sénégal · Chine</div></div><div class="lb-gain">+12 800 F</div></div>
+    <div class="lb-item"><div class="lb-rank rn">5</div><div><div class="lb-name">Rodrigue H.</div><div class="lb-pays">🇧🇯 Bénin · USA</div></div><div class="lb-gain">+9 600 F</div></div>
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,215,0,.1)">
+      <div id="myRankDisplay" style="display:none;display:flex;align-items:center;gap:10px;background:rgba(255,215,0,.06);border-radius:12px;padding:10px 13px">
+        <div class="lb-rank rn">—</div>
+        <div><div class="lb-name" id="myLbName">Vous</div><div class="lb-pays">Votre classement</div></div>
+        <div class="lb-gain" id="myLbGain">+0 F</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DEPOT CTA -->
+<section class="sec" style="text-align:center">
+  <div class="sec-eyebrow">Prêt à jouer pour de vrai ?</div>
+  <h2 class="sec-h" style="margin:0 auto 10px">Déposez &<br><span>Gagnez</span></h2>
+  <p class="sec-p" style="margin:0 auto 24px">Dépôt minimum 200 FCFA. Via MTN MoMo, Moov Money ou Celtiis. Retrait sous 24h après gain.</p>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <button class="btn-play" onclick="openM('depot')">💰 DÉPOSER</button>
+    <button class="btn-demo" onclick="openM('retrait')">💸 RETIRER MES GAINS</button>
+  </div>
+  <div style="margin-top:14px;font-family:'Space Mono',monospace;font-size:.55rem;color:var(--muted);letter-spacing:2px">
+    MTN MOMO · MOOV MONEY · CELTIIS · VISA/MASTERCARD
+  </div>
+</section>
+
+<footer style="position:relative;z-index:1;text-align:center;padding:36px 16px 60px;
+  border-top:1px solid rgba(255,215,0,.08);color:var(--muted);font-size:.72rem">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--or);letter-spacing:4px;margin-bottom:8px">MONDO QUIZ</div>
+  <p>Quiz Culture Générale · 195 Pays · Argent Réel</p>
+  <p>MTN MoMo · Moov Money · Celtiis · Visa/Mastercard</p>
+  <p style="margin-top:10px;font-size:.62rem;opacity:.5">© 2025 Mondo Quiz · Version Démo · Bénin 🇧🇯<br>Jeu soumis à réglementation · Agrément en cours</p>
+</footer>
+
+<div class="toast" id="toastEl"></div>
+
+<!-- BLUR OVERLAY — Protection anti-capture -->
+<div class="blur-overlay" id="blurOverlay">
+  <div style="font-size:2.5rem">🔒</div>
+  <div class="blur-msg">SESSION SUSPENDUE</div>
+  <div class="blur-sub">Vous avez quitté la fenêtre de jeu.<br>La partie est en pause pour protéger l'intégrité du quiz.<br><br>Revenez sur cette fenêtre pour continuer.</div>
+  <button class="btn-gold" onclick="resumeGame()" style="margin-top:8px">▶ REPRENDRE LA PARTIE</button>
+</div>
+
+<div id="modRoot"></div>
+
+<script>
+// STARS
+(function(){
+  var s=document.getElementById('stars');
+  for(var i=0;i<60;i++){
+    var d=document.createElement('div');d.className='star';
+    var sz=Math.random()*2+.5;
+    d.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;'+
+      'width:'+sz+'px;height:'+sz+'px;'+
+      'animation-duration:'+(Math.random()*4+2)+'s;'+
+      'animation-delay:'+Math.random()*-6+'s';
+    s.appendChild(d);
+  }
+})();
+
+// NAVIGATION
+function goSec(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+
+// TOAST
+function showToast(m,red){
+  var t=document.getElementById('toastEl');
+  t.textContent=m;t.className='toast'+(red?' red':'')+' on';
+  setTimeout(function(){t.classList.remove('on');},2800);
+}
+
+// USER STATE
+var USER=null;try{USER=JSON.parse(localStorage.getItem('mq_user')||'null');}catch(e){}
+var SOLDE=parseInt(localStorage.getItem('mq_solde')||'5000');
+var GAINS_SESSION=0;
+
+// PAYS DATA
+var PAYS=[
+  {flag:"🇦🇫",nm:"Afghanistan"},
+  {flag:"🇿🇦",nm:"Afrique du Sud"},
+  {flag:"🇦🇱",nm:"Albanie"},
+  {flag:"🇩🇿",nm:"Algérie"},
+  {flag:"🇩🇪",nm:"Allemagne"},
+  {flag:"🇦🇩",nm:"Andorre"},
+  {flag:"🇦🇴",nm:"Angola"},
+  {flag:"🇦🇬",nm:"Antigua-et-Barbuda"},
+  {flag:"🇸🇦",nm:"Arabie Saoudite"},
+  {flag:"🇦🇷",nm:"Argentine"},
+  {flag:"🇦🇲",nm:"Arménie"},
+  {flag:"🇦🇺",nm:"Australie"},
+  {flag:"🇦🇹",nm:"Autriche"},
+  {flag:"🇦🇿",nm:"Azerbaïdjan"},
+  {flag:"🇧🇸",nm:"Bahamas"},
+  {flag:"🇧🇭",nm:"Bahreïn"},
+  {flag:"🇧🇩",nm:"Bangladesh"},
+  {flag:"🇧🇧",nm:"Barbade"},
+  {flag:"🇧🇪",nm:"Belgique"},
+  {flag:"🇧🇿",nm:"Belize"},
+  {flag:"🇧🇯",nm:"Bénin"},
+  {flag:"🇧🇹",nm:"Bhoutan"},
+  {flag:"🇧🇾",nm:"Biélorussie"},
+  {flag:"🇲🇲",nm:"Birmanie"},
+  {flag:"🇧🇴",nm:"Bolivie"},
+  {flag:"🇧🇦",nm:"Bosnie-Herzégovine"},
+  {flag:"🇧🇼",nm:"Botswana"},
+  {flag:"🇧🇷",nm:"Brésil"},
+  {flag:"🇧🇳",nm:"Brunei"},
+  {flag:"🇧🇬",nm:"Bulgarie"},
+  {flag:"🇧🇫",nm:"Burkina Faso"},
+  {flag:"🇧🇮",nm:"Burundi"},
+  {flag:"🇰🇭",nm:"Cambodge"},
+  {flag:"🇨🇲",nm:"Cameroun"},
+  {flag:"🇨🇦",nm:"Canada"},
+  {flag:"🇨🇻",nm:"Cap-Vert"},
+  {flag:"🇨🇱",nm:"Chili"},
+  {flag:"🇨🇳",nm:"Chine"},
+  {flag:"🇨🇾",nm:"Chypre"},
+  {flag:"🇨🇴",nm:"Colombie"},
+  {flag:"🇰🇲",nm:"Comores"},
+  {flag:"🇨🇬",nm:"Congo"},
+  {flag:"🇰🇷",nm:"Corée du Sud"},
+  {flag:"🇰🇵",nm:"Corée du Nord"},
+  {flag:"🇨🇷",nm:"Costa Rica"},
+  {flag:"🇨🇮",nm:"Côte d'Ivoire"},
+  {flag:"🇭🇷",nm:"Croatie"},
+  {flag:"🇨🇺",nm:"Cuba"},
+  {flag:"🇩🇰",nm:"Danemark"},
+  {flag:"🇩🇯",nm:"Djibouti"},
+  {flag:"🇩🇴",nm:"Rép. Dominicaine"},
+  {flag:"🇪🇬",nm:"Égypte"},
+  {flag:"🇸🇻",nm:"Salvador"},
+  {flag:"🇦🇪",nm:"Émirats arabes unis"},
+  {flag:"🇪🇨",nm:"Équateur"},
+  {flag:"🇪🇷",nm:"Érythrée"},
+  {flag:"🇪🇸",nm:"Espagne"},
+  {flag:"🇪🇪",nm:"Estonie"},
+  {flag:"🇸🇿",nm:"Eswatini"},
+  {flag:"🇺🇸",nm:"États-Unis"},
+  {flag:"🇪🇹",nm:"Éthiopie"},
+  {flag:"🇫🇯",nm:"Fidji"},
+  {flag:"🇫🇮",nm:"Finlande"},
+  {flag:"🇫🇷",nm:"France"},
+  {flag:"🇬🇦",nm:"Gabon"},
+  {flag:"🇬🇲",nm:"Gambie"},
+  {flag:"🇬🇪",nm:"Géorgie"},
+  {flag:"🇬🇭",nm:"Ghana"},
+  {flag:"🇬🇷",nm:"Grèce"},
+  {flag:"🇬🇩",nm:"Grenade"},
+  {flag:"🇬🇹",nm:"Guatemala"},
+  {flag:"🇬🇳",nm:"Guinée"},
+  {flag:"🇬🇼",nm:"Guinée-Bissau"},
+  {flag:"🇬🇶",nm:"Guinée Équatoriale"},
+  {flag:"🇬🇾",nm:"Guyana"},
+  {flag:"🇭🇹",nm:"Haïti"},
+  {flag:"🇭🇳",nm:"Honduras"},
+  {flag:"🇭🇺",nm:"Hongrie"},
+  {flag:"🇮🇳",nm:"Inde"},
+  {flag:"🇮🇩",nm:"Indonésie"},
+  {flag:"🇮🇶",nm:"Irak"},
+  {flag:"🇮🇷",nm:"Iran"},
+  {flag:"🇮🇪",nm:"Irlande"},
+  {flag:"🇮🇸",nm:"Islande"},
+  {flag:"🇮🇱",nm:"Israël"},
+  {flag:"🇮🇹",nm:"Italie"},
+  {flag:"🇯🇲",nm:"Jamaïque"},
+  {flag:"🇯🇵",nm:"Japon"},
+  {flag:"🇯🇴",nm:"Jordanie"},
+  {flag:"🇰🇿",nm:"Kazakhstan"},
+  {flag:"🇰🇪",nm:"Kenya"},
+  {flag:"🇰🇬",nm:"Kirghizistan"},
+  {flag:"🇰🇮",nm:"Kiribati"},
+  {flag:"🇽🇰",nm:"Kosovo"},
+  {flag:"🇰🇼",nm:"Koweït"},
+  {flag:"🇱🇦",nm:"Laos"},
+  {flag:"🇱🇸",nm:"Lesotho"},
+  {flag:"🇱🇻",nm:"Lettonie"},
+  {flag:"🇱🇧",nm:"Liban"},
+  {flag:"🇱🇷",nm:"Liberia"},
+  {flag:"🇱🇾",nm:"Libye"},
+  {flag:"🇱🇮",nm:"Liechtenstein"},
+  {flag:"🇱🇹",nm:"Lituanie"},
+  {flag:"🇱🇺",nm:"Luxembourg"},
+  {flag:"🇲🇰",nm:"Macédoine du Nord"},
+  {flag:"🇲🇬",nm:"Madagascar"},
+  {flag:"🇲🇾",nm:"Malaisie"},
+  {flag:"🇲🇼",nm:"Malawi"},
+  {flag:"🇲🇻",nm:"Maldives"},
+  {flag:"🇲🇱",nm:"Mali"},
+  {flag:"🇲🇹",nm:"Malte"},
+  {flag:"🇲🇦",nm:"Maroc"},
+  {flag:"🇲🇭",nm:"Marshall"},
+  {flag:"🇲🇺",nm:"Maurice"},
+  {flag:"🇲🇷",nm:"Mauritanie"},
+  {flag:"🇲🇽",nm:"Mexique"},
+  {flag:"🇫🇲",nm:"Micronésie"},
+  {flag:"🇲🇩",nm:"Moldavie"},
+  {flag:"🇲🇨",nm:"Monaco"},
+  {flag:"🇲🇳",nm:"Mongolie"},
+  {flag:"🇲🇪",nm:"Monténégro"},
+  {flag:"🇲🇿",nm:"Mozambique"},
+  {flag:"🇳🇦",nm:"Namibie"},
+  {flag:"🇳🇷",nm:"Nauru"},
+  {flag:"🇳🇵",nm:"Népal"},
+  {flag:"🇳🇮",nm:"Nicaragua"},
+  {flag:"🇳🇪",nm:"Niger"},
+  {flag:"🇳🇬",nm:"Nigeria"},
+  {flag:"🇳🇴",nm:"Norvège"},
+  {flag:"🇳🇿",nm:"Nouvelle-Zélande"},
+  {flag:"🇴🇲",nm:"Oman"},
+  {flag:"🇺🇬",nm:"Ouganda"},
+  {flag:"🇺🇿",nm:"Ouzbékistan"},
+  {flag:"🇵🇰",nm:"Pakistan"},
+  {flag:"🇵🇼",nm:"Palaos"},
+  {flag:"🇵🇸",nm:"Palestine"},
+  {flag:"🇵🇦",nm:"Panama"},
+  {flag:"🇵🇬",nm:"Papouasie-Nouvelle-Guinée"},
+  {flag:"🇵🇾",nm:"Paraguay"},
+  {flag:"🇳🇱",nm:"Pays-Bas"},
+  {flag:"🇵🇪",nm:"Pérou"},
+  {flag:"🇵🇭",nm:"Philippines"},
+  {flag:"🇵🇱",nm:"Pologne"},
+  {flag:"🇵🇹",nm:"Portugal"},
+  {flag:"🇶🇦",nm:"Qatar"},
+  {flag:"🇨🇫",nm:"Centrafrique"},
+  {flag:"🇨🇩",nm:"RD Congo"},
+  {flag:"🇷🇴",nm:"Roumanie"},
+  {flag:"🇬🇧",nm:"Royaume-Uni"},
+  {flag:"🇷🇺",nm:"Russie"},
+  {flag:"🇷🇼",nm:"Rwanda"},
+  {flag:"🇰🇳",nm:"Saint-Christophe-et-Niévès"},
+  {flag:"🇸🇲",nm:"Saint-Marin"},
+  {flag:"🇻🇨",nm:"Saint-Vincent-et-les-Grenadines"},
+  {flag:"🇱🇨",nm:"Sainte-Lucie"},
+  {flag:"🇸🇧",nm:"Salomon"},
+  {flag:"🇼🇸",nm:"Samoa"},
+  {flag:"🇸🇹",nm:"Sao Tomé-et-Principe"},
+  {flag:"🇸🇳",nm:"Sénégal"},
+  {flag:"🇷🇸",nm:"Serbie"},
+  {flag:"🇸🇨",nm:"Seychelles"},
+  {flag:"🇸🇱",nm:"Sierra Leone"},
+  {flag:"🇸🇬",nm:"Singapour"},
+  {flag:"🇸🇰",nm:"Slovaquie"},
+  {flag:"🇸🇮",nm:"Slovénie"},
+  {flag:"🇸🇴",nm:"Somalie"},
+  {flag:"🇸🇩",nm:"Soudan"},
+  {flag:"🇸🇸",nm:"Soudan du Sud"},
+  {flag:"🇱🇰",nm:"Sri Lanka"},
+  {flag:"🇸🇪",nm:"Suède"},
+  {flag:"🇨🇭",nm:"Suisse"},
+  {flag:"🇸🇷",nm:"Suriname"},
+  {flag:"🇸🇾",nm:"Syrie"},
+  {flag:"🇹🇯",nm:"Tadjikistan"},
+  {flag:"🇹🇿",nm:"Tanzanie"},
+  {flag:"🇹🇩",nm:"Tchad"},
+  {flag:"🇨🇿",nm:"Tchéquie"},
+  {flag:"🇹🇭",nm:"Thaïlande"},
+  {flag:"🇹🇱",nm:"Timor oriental"},
+  {flag:"🇹🇬",nm:"Togo"},
+  {flag:"🇹🇴",nm:"Tonga"},
+  {flag:"🇹🇹",nm:"Trinité-et-Tobago"},
+  {flag:"🇹🇳",nm:"Tunisie"},
+  {flag:"🇹🇲",nm:"Turkménistan"},
+  {flag:"🇹🇷",nm:"Turquie"},
+  {flag:"🇹🇻",nm:"Tuvalu"},
+  {flag:"🇺🇦",nm:"Ukraine"},
+  {flag:"🇺🇾",nm:"Uruguay"},
+  {flag:"🇻🇺",nm:"Vanuatu"},
+  {flag:"🇻🇦",nm:"Vatican"},
+  {flag:"🇻🇪",nm:"Venezuela"},
+  {flag:"🇻🇳",nm:"Vietnam"},
+  {flag:"🇾🇪",nm:"Yémen"},
+  {flag:"🇿🇲",nm:"Zambie"},
+  {flag:"🇿🇼",nm:"Zimbabwe"},
+  {flag:"🇹🇼",nm:"Taïwan"}
+];
+
+// Build pays grid
+var paysGrid=document.getElementById('paysGrid');
+if(paysGrid){
+  PAYS.forEach(function(p){
+    var d=document.createElement('div');d.className='pays-card';
+    d.dataset.nm=p.nm.toLowerCase();
+    d.innerHTML='<div class="pays-flag">'+p.flag+'</div><div class="pays-nm">'+p.nm+'</div>';
+    d.onclick=function(){
+      document.querySelectorAll('.pays-card').forEach(function(c){c.style.border='1px solid rgba(255,255,255,.07)';c.style.background='rgba(255,255,255,.04)';});
+      this.style.border='1.5px solid var(--or)';this.style.background='rgba(255,215,0,.1)';
+      selectedPays=p;
+      var btn=document.getElementById('startBtn');
+      if(btn){btn.disabled=false;btn.textContent='🎯 JOUER — '+p.flag+' '+p.nm;}
+    };
+    paysGrid.appendChild(d);
+  });
+}
+
+// FILTER PAYS (search)
+function filterPays(query){
+  var q=query.trim().toLowerCase();
+  var cards=document.querySelectorAll('.pays-card');
+  var visibleCount=0;
+  cards.forEach(function(c){
+    var match=c.dataset.nm.indexOf(q)>=0;
+    c.style.display=match?'':'none';
+    if(match)visibleCount++;
+  });
+  var noRes=document.getElementById('paysNoResult');
+  if(noRes)noRes.style.display=visibleCount===0?'block':'none';
+}
+
+// MISE
+var selectedMise=25;
+var selectedPays=null;
+function selMise(el,amt){
+  document.querySelectorAll('.mise-opt').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');selectedMise=amt;
+}
+
+// QUESTIONS BANK
+var QUESTIONS={
+  'France':[
+    {q:"Quelle est la capitale de la France ?",opts:["Lyon","Marseille","Paris","Bordeaux"],answer:2,exp:"Paris est la capitale de la France depuis des siècles."},
+    {q:"Qui a construit la Tour Eiffel ?",opts:["Napoléon Bonaparte","Gustave Eiffel","Louis XIV","Victor Hugo"],answer:1,exp:"La Tour Eiffel a été construite par Gustave Eiffel pour l'Exposition Universelle de 1889."},
+    {q:"Quelle rivière traverse Paris ?",opts:["La Loire","Le Rhône","La Seine","La Garonne"],answer:2,exp:"La Seine traverse Paris d'est en ouest sur environ 13 km dans la ville."},
+    {q:"En quelle année la Révolution française a-t-elle commencé ?",opts:["1799","1776","1789","1804"],answer:2,exp:"La Révolution française a débuté en 1789 avec la prise de la Bastille le 14 juillet."},
+    {q:"Quel est le fromage français le plus connu au monde ?",opts:["Emmental","Camembert","Roquefort","Brie"],answer:1,exp:"Le Camembert de Normandie est l'un des fromages français les plus connus internationalement."},
+  ],
+  'Bénin':[
+    {q:"Quelle est la capitale officielle du Bénin ?",opts:["Cotonou","Parakou","Abomey","Porto-Novo"],answer:3,exp:"Porto-Novo est la capitale officielle du Bénin. Cotonou est la plus grande ville et siège du gouvernement."},
+    {q:"Le Bénin est souvent appelé le 'quartier Latin' de l'Afrique. Pourquoi ?",opts:["Pour sa cuisine","Pour son niveau d'éducation élevé","Pour ses plages","Pour son armée"],answer:1,exp:"Le Bénin est surnommé le 'Quartier Latin de l'Afrique' pour son taux d'alphabétisation et son niveau d'éducation historiquement élevé."},
+    {q:"Quel est le plus grand parc naturel du Bénin ?",opts:["Parc W","Parc de la Pendjari","Parc de Lokossa","Forêt de Niaouli"],answer:1,exp:"Le Parc National de la Pendjari est le plus grand parc du Bénin, classé Réserve de Biosphère par l'UNESCO."},
+    {q:"En quelle année le Bénin a-t-il obtenu son indépendance de la France ?",opts:["1958","1960","1962","1965"],answer:1,exp:"Le Bénin (ex-Dahomey) est indépendant depuis le 1er août 1960."},
+    {q:"Quel était l'ancien nom du Bénin ?",opts:["Volta","Dahomey","Oubangui","Abomey"],answer:1,exp:"Le Bénin s'appelait Dahomey jusqu'en 1975, date à laquelle le président Kérékou l'a renommé Bénin."},
+    {q:"Combien de couleurs compte le drapeau béninois ?",opts:["2","3","4","5"],answer:1,exp:"Le drapeau du Bénin comporte 3 couleurs : vert, jaune et rouge."},
+    {q:"Quelle est la plus grande ethnie du Bénin ?",opts:["Bariba","Fon","Yoruba","Dendi"],answer:1,exp:"Les Fon constituent le groupe ethnique le plus important du Bénin, principalement dans le sud du pays."},
+    {q:"Quel fleuve est le plus long du Bénin ?",opts:["Mono","Couffo","Ouémé","Niger"],answer:2,exp:"L'Ouémé est le plus long fleuve du Bénin avec environ 510 km."},
+    {q:"Combien de départements compte le Bénin ?",opts:["10","12","14","9"],answer:1,exp:"Le Bénin est divisé en 12 départements depuis la réforme administrative de 1999."},
+    {q:"Quel roi du Danxomè est célèbre pour sa résistance face à la colonisation française ?",opts:["Ghézo","Glèlè","Béhanzin","Agoli-Agbo"],answer:2,exp:"Le roi Béhanzin (1890-1894) est célèbre pour sa résistance héroïque face à la conquête coloniale française."},
+  ],
+  'USA':[
+    {q:"Combien d'États composent les États-Unis ?",opts:["48","51","50","52"],answer:2,exp:"Les États-Unis sont composés de 50 États depuis l'admission d'Hawaï en 1959."},
+    {q:"Qui est le premier président des États-Unis ?",opts:["Abraham Lincoln","Thomas Jefferson","Benjamin Franklin","George Washington"],answer:3,exp:"George Washington fut le premier président des États-Unis, de 1789 à 1797."},
+    {q:"Quelle est la plus grande ville des États-Unis ?",opts:["Los Angeles","Chicago","New York","Houston"],answer:2,exp:"New York City est la plus grande ville des États-Unis avec plus de 8 millions d'habitants."},
+    {q:"Sur quel fleuve se trouve la ville de Washington D.C. ?",opts:["Mississippi","Ohio","Hudson","Potomac"],answer:3,exp:"Washington D.C. est située sur le fleuve Potomac, à la frontière entre le Maryland et la Virginie."},
+    {q:"En quelle année les États-Unis ont-ils déclaré leur indépendance ?",opts:["1763","1812","1776","1787"],answer:2,exp:"La Déclaration d'Indépendance des États-Unis a été signée le 4 juillet 1776."},
+  ],
+  'Japon':[
+    {q:"Quelle est la capitale du Japon ?",opts:["Osaka","Kyoto","Tokyo","Hiroshima"],answer:2,exp:"Tokyo est la capitale du Japon et l'une des plus grandes métropoles du monde."},
+    {q:"Comment appelle-t-on le mont sacré du Japon ?",opts:["Mont Fuji","Mont Aso","Mont Kita","Mont Nasu"],answer:0,exp:"Le Mont Fuji (Fujisan) est la montagne la plus haute et la plus sacrée du Japon, à 3 776 mètres."},
+    {q:"Quel animal est le symbole national du Japon ?",opts:["Le dragon","La grue du Japon","Le panda","Le tigre"],answer:1,exp:"La grue du Japon (Grus japonensis) est un symbole national de longévité et de bonheur."},
+    {q:"Qu'est-ce que le 'Manga' ?",opts:["Un plat japonais","Un style de bande dessinée japonaise","Une danse traditionnelle","Un sport japonais"],answer:1,exp:"Le manga est un style de bande dessinée né au Japon, qui se distingue par son sens de lecture de droite à gauche."},
+    {q:"Quel est le sport national du Japon ?",opts:["Judo","Karaté","Sumo","Kendo"],answer:2,exp:"Le sumo est considéré comme le sport national du Japon, avec des origines religieuses shintoïstes."},
+  ],
+  'Brésil':[
+    {q:"Quelle est la capitale du Brésil ?",opts:["Rio de Janeiro","São Paulo","Brasília","Salvador"],answer:2,exp:"Brasília est la capitale fédérale du Brésil depuis 1960, ayant remplacé Rio de Janeiro."},
+    {q:"Quel fleuve est le plus grand du Brésil ?",opts:["Paraná","São Francisco","Amazone","Tocantins"],answer:2,exp:"L'Amazone est le plus grand fleuve du Brésil et le plus grand du monde en volume d'eau."},
+    {q:"En quelle langue parle-t-on au Brésil ?",opts:["Espagnol","Portugais","Brésilien","Anglais"],answer:1,exp:"Le Brésil est le seul pays d'Amérique du Sud où la langue officielle est le portugais, héritage de la colonisation."},
+    {q:"Quel est le célèbre carnaval du Brésil ?",opts:["Carnaval de São Paulo","Carnaval de Brasília","Carnaval de Rio","Carnaval de Salvador"],answer:2,exp:"Le Carnaval de Rio de Janeiro est le plus célèbre du monde, avec ses défilés de samba dans le Sambodrome."},
+    {q:"Quelle statue emblématique surplombe Rio de Janeiro ?",opts:["Statue de la Liberté","Christ Rédempteur","Statue de Bolivar","Vierge de Guadalupe"],answer:1,exp:"Le Christ Rédempteur (Cristo Redentor) est une statue de 38 mètres qui surplombe Rio depuis le Corcovado depuis 1931."},
+    {q:"Combien de couleurs compte le drapeau brésilien ?",opts:["3","4","5","2"],answer:1,exp:"Le drapeau brésilien comporte 4 couleurs : vert, jaune, bleu et blanc."},
+    {q:"Quel sport est le plus populaire au Brésil ?",opts:["Basketball","Volleyball","Football","Tennis"],answer:2,exp:"Le football est le sport national du Brésil, pays détenteur d'un record de 5 Coupes du Monde."},
+    {q:"Quelle star du football brésilien est surnommée 'O Rei' (Le Roi) ?",opts:["Ronaldinho","Pelé","Neymar","Zico"],answer:1,exp:"Pelé, surnommé 'O Rei' (Le Roi), est considéré comme l'un des plus grands footballeurs de tous les temps."},
+    {q:"Quelle est la plus grande forêt tropicale du Brésil ?",opts:["Forêt de l'Atlantique","Amazonie","Cerrado","Pantanal"],answer:1,exp:"L'Amazonie couvre environ 60% du territoire brésilien et abrite la plus grande biodiversité du monde."},
+  ],
+  'Allemagne':[
+    {q:"Quelle est la capitale de l'Allemagne ?",opts:["Munich","Francfort","Hambourg","Berlin"],answer:3,exp:"Berlin est la capitale de l'Allemagne depuis la réunification en 1990."},
+    {q:"Quel mur emblématique a séparé Berlin pendant la Guerre Froide ?",opts:["Mur de Berlin","Mur de Hadrien","Mur d'Adrien","Mur de Chine"],answer:0,exp:"Le Mur de Berlin a séparé Berlin-Est et Berlin-Ouest de 1961 à 1989, symbole de la Guerre Froide."},
+    {q:"En quelle année le Mur de Berlin est-il tombé ?",opts:["1985","1989","1991","1995"],answer:1,exp:"Le Mur de Berlin est tombé le 9 novembre 1989, menant à la réunification allemande en 1990."},
+    {q:"Combien de couleurs compte le drapeau allemand ?",opts:["2","3","4","5"],answer:1,exp:"Le drapeau allemand a 3 couleurs : noir, rouge et or (jaune)."},
+    {q:"Quel est le plus long fleuve d'Allemagne ?",opts:["Rhin","Danube","Elbe","Main"],answer:1,exp:"Le Danube est le plus long fleuve traversant l'Allemagne, bien que le Rhin soit le plus connu économiquement."},
+    {q:"Quelle marque automobile allemande est connue pour ses voitures de luxe à l'étoile ?",opts:["BMW","Volkswagen","Mercedes-Benz","Audi"],answer:2,exp:"Mercedes-Benz, avec son logo en étoile à trois branches, est une marque allemande de prestige fondée en 1926."},
+    {q:"Qui était le dictateur allemand pendant la Seconde Guerre mondiale ?",opts:["Otto von Bismarck","Adolf Hitler","Konrad Adenauer","Helmut Kohl"],answer:1,exp:"Adolf Hitler dirigea l'Allemagne nazie de 1933 à 1945, menant le pays dans la Seconde Guerre mondiale."},
+  ],
+  'Égypte':[
+    {q:"Quelle est la capitale de l'Égypte ?",opts:["Alexandrie","Le Caire","Gizeh","Louxor"],answer:1,exp:"Le Caire est la capitale de l'Égypte, l'une des plus grandes métropoles d'Afrique."},
+    {q:"Quel fleuve traverse l'Égypte du sud au nord ?",opts:["Le Niger","Le Nil","Le Congo","Le Zambèze"],answer:1,exp:"Le Nil, fleuve le plus long du monde avec 6 650 km, traverse l'Égypte et a permis l'essor de la civilisation égyptienne antique."},
+    {q:"Combien de grandes pyramides composent le site de Gizeh ?",opts:["2","3","4","5"],answer:1,exp:"Le site de Gizeh comporte 3 grandes pyramides : Khéops, Khéphren et Mykérinos."},
+    {q:"Quelle dynastie égyptienne antique est la plus connue grâce à Toutânkhamon ?",opts:["XVIIIe dynastie","XIXe dynastie","Ancien Empire","Moyen Empire"],answer:0,exp:"Toutânkhamon appartenait à la XVIIIe dynastie égyptienne, durant le Nouvel Empire (vers 1332-1323 av. J.-C.)."},
+    {q:"Quel symbole représente le pouvoir royal des pharaons égyptiens ?",opts:["Le sphinx","L'ankh","Le scarabée","Tous ces symboles"],answer:3,exp:"Le sphinx, l'ankh (croix de vie) et le scarabée sont tous des symboles importants du pouvoir et de la religion égyptienne antique."},
+  ],
+  'Rwanda':[
+    {q:"Quelle est la capitale du Rwanda ?",opts:["Kigali","Butare","Gisenyi","Ruhengeri"],answer:0,exp:"Kigali est la capitale et plus grande ville du Rwanda, pays d'Afrique de l'Est."},
+    {q:"En quelle année a eu lieu le génocide rwandais ?",opts:["1990","1994","1998","2000"],answer:1,exp:"Le génocide rwandais a eu lieu en 1994, entre avril et juillet, causant la mort d'environ 800 000 personnes, majoritairement Tutsi."},
+    {q:"Quelles sont les deux principales ethnies impliquées dans le génocide rwandais ?",opts:["Hutu et Tutsi","Zoulou et Xhosa","Massaï et Kikuyu","Bantou et Pygmées"],answer:0,exp:"Le génocide rwandais a vu les extrémistes Hutu massacrer la population Tutsi et des Hutu modérés."},
+    {q:"Quel surnom donne-t-on au Rwanda en raison de son relief montagneux ?",opts:["Pays du Levant","Pays des Mille Collines","Pays du Soleil","Terre des Pharaons"],answer:1,exp:"Le Rwanda est surnommé 'Pays des Mille Collines' en raison de son relief vallonné et montagneux."},
+  ],
+  'Afrique du Sud':[
+    {q:"Combien de capitales possède l'Afrique du Sud ?",opts:["1","2","3","4"],answer:2,exp:"L'Afrique du Sud a 3 capitales : Pretoria (administrative), Le Cap (législative) et Bloemfontein (judiciaire)."},
+    {q:"Quel régime de séparation raciale a sévi en Afrique du Sud jusqu'en 1991 ?",opts:["La ségrégation","L'apartheid","Le colonialisme","Le tribalisme"],answer:1,exp:"L'apartheid était un système de séparation raciale institutionnalisé en Afrique du Sud de 1948 à 1991."},
+    {q:"Quel président sud-africain emblématique a combattu l'apartheid et passé 27 ans en prison ?",opts:["Jacob Zuma","Thabo Mbeki","Nelson Mandela","Cyril Ramaphosa"],answer:2,exp:"Nelson Mandela, figure de la lutte anti-apartheid, fut emprisonné 27 ans avant de devenir le premier président noir d'Afrique du Sud en 1994."},
+    {q:"Combien de langues officielles compte l'Afrique du Sud ?",opts:["2","11","6","4"],answer:1,exp:"L'Afrique du Sud compte 11 langues officielles, reflétant sa diversité ethnique unique au monde."},
+    {q:"Quel surnom donne-t-on à l'Afrique du Sud en raison de sa diversité ?",opts:["Pays du Soleil","Nation Arc-en-ciel","Terre des Géants","Pays des Mille Lacs"],answer:1,exp:"L'Afrique du Sud est surnommée 'Nation Arc-en-ciel' (Rainbow Nation) en référence à sa diversité ethnique et culturelle."},
+  ],
+  'Chine':[
+    {q:"Quelle est la capitale de la Chine ?",opts:["Shanghai","Pékin","Hong Kong","Canton"],answer:1,exp:"Pékin (Beijing) est la capitale de la République populaire de Chine depuis 1949."},
+    {q:"Quelle dynastie a construit la majeure partie de la Grande Muraille de Chine que l'on visite aujourd'hui ?",opts:["Dynastie Qin","Dynastie Ming","Dynastie Tang","Dynastie Han"],answer:1,exp:"La majeure partie de la Grande Muraille visible aujourd'hui a été construite/restaurée sous la dynastie Ming (1368-1644)."},
+    {q:"Quel est le fleuve le plus long de Chine ?",opts:["Fleuve Jaune","Yangtsé","Mékong","Fleuve Amour"],answer:1,exp:"Le Yangtsé (Chang Jiang) est le plus long fleuve de Chine et d'Asie avec 6 300 km."},
+    {q:"Combien d'étoiles compte le drapeau chinois ?",opts:["3","4","5","6"],answer:2,exp:"Le drapeau chinois comporte 5 étoiles jaunes sur fond rouge : une grande et quatre petites."},
+    {q:"Quelle armée de statues a été découverte près de Xi'an, datant de la dynastie Qin ?",opts:["Armée de Terre Cuite","Armée de Bronze","Armée de Jade","Armée de Pierre"],answer:0,exp:"L'Armée de Terre Cuite (Armée enterrée de Xi'an) compte plus de 8000 statues de soldats grandeur nature, créée pour protéger le premier empereur Qin Shi Huang."},
+  ],
+};
+
+// DRAPEAUX & COULEURS - questions transverses utilisables pour tout pays
+var DRAPEAU_THEMES = "Pour chaque pays : nombre de couleurs du drapeau, signification des couleurs, nombre de couplets de l'hymne national, président actuel et durée de son mandat, nombre de ministères, taux d'alphabétisation, ethnies principales, relief et hydrographie, axes routiers, stades aux normes FIFA, stars sportives, statues et monuments emblématiques, nombre d'aéroports/ports/mines, universités principales, héros nationaux et martyrs.";
+
+
+// Default questions for countries without specific bank
+var DEFAULT_Q=[
+  {q:"Quel est l'organisme international qui regroupe presque tous les pays du monde ?",opts:["L'Union Européenne","L'OTAN","L'ONU","L'UA"],answer:2,exp:"L'ONU (Organisation des Nations Unies) regroupe 193 États membres et 2 États observateurs."},
+  {q:"Combien de pays sont membres de l'ONU ?",opts:["180","193","210","165"],answer:1,exp:"L'ONU compte 193 États membres depuis l'admission du Soudan du Sud en 2011."},
+  {q:"Quel est l'océan le plus grand du monde ?",opts:["Atlantique","Arctique","Indien","Pacifique"],answer:3,exp:"L'océan Pacifique est le plus grand et le plus profond des océans, couvrant environ 165 millions de km²."},
+  {q:"Quel est le pays le plus peuplé du monde ?",opts:["États-Unis","Inde","Chine","Russie"],answer:1,exp:"L'Inde est devenue le pays le plus peuplé du monde en 2023, dépassant la Chine avec 1,4 milliard d'habitants."},
+  {q:"Quelle est la plus haute montagne du monde ?",opts:["Mont Blanc","Mont Kilimandjaro","Mont Everest","Mont McKinley"],answer:2,exp:"Le Mont Everest est la plus haute montagne du monde avec 8 849 mètres d'altitude, dans l'Himalaya."},
+];
+
+// Thèmes complets pour génération IA par pays (utilisés quand aucune banque locale n'existe)
+var PAYS_THEMES_LIST = "relief (montagnes, vallées, embouchures), hydrographie (fleuves, lacs, lagunes, espèces endémiques), variété musicale, ethnies, axes routiers, stades aux normes FIFA, stars sportives, taux d'alphabétisation, statues et monuments emblématiques, nombre d'aéroports/ports/mines, universités, drapeau (nombre de couleurs), hymne national (nombre de couplets), héros et martyrs nationaux, présidents et durée de mandat, nombre de ministères, guerres et conflits historiques, monarchie ou régime politique, religions pratiquées";
+
+async function getQuestions(pays){
+  // Banque locale dédiée si disponible
+  if(QUESTIONS[pays]){
+    return QUESTIONS[pays].slice().sort(function(){return Math.random()-.5;});
+  }
+  // Sinon génération IA sur les thèmes complets pour CE pays précis
+  try{
+    var prompt='Génère exactement 5 questions QCM de culture générale DIFFICILES et PRÉCISES sur le pays '+pays+'.\nCouvre un mélange aléatoire parmi ces thèmes : '+PAYS_THEMES_LIST+'.\nQuestions factuelles et vérifiables uniquement.\nFormat JSON uniquement:\n[{"q":"Question précise?","opts":["A","B","C","D"],"answer":0,"exp":"Explication factuelle courte"}]\nanswer=index bonne réponse (0-3). JSON pur sans markdown, sans texte avant ou après.';
+    var r=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,messages:[{role:"user",content:prompt}]})
+    });
+    var j=await r.json();
+    var txt=j.content?j.content.map(function(c){return c.text||'';}).join(''):'[]';
+    var parsed=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    if(parsed&&parsed.length>0)return parsed;
+  }catch(e){
+    console.log('IA indisponible, fallback questions génériques:',e);
+  }
+  // Fallback si pas de clé API : questions génériques
+  return DEFAULT_Q.slice().sort(function(){return Math.random()-.5;});
+}
+
+// GAME STATE
+var gameState={
+  active:false,pays:null,mise:25,questions:[],current:0,
+  currentMise:25,totalGain:0,timer:null,timeLeft:10
+};
+var SOLDE_DEMO=5000;
+var GAINS_DEMO=0;
+
+// BUILD MULTIPLIER TRACK
+function buildMultTrack(mise){
+  var track=document.getElementById('multTrack');
+  if(!track)return;
+  var vals=[mise];
+  for(var i=1;i<10;i++)vals.push(vals[i-1]*2);
+  var html='';
+  vals.forEach(function(v,i){
+    html+='<div class="mult-node">'+
+      '<div class="mult-circle" id="mc-'+i+'">'+(i===0?'x1':'x'+Math.pow(2,i))+'</div>'+
+      '<div class="mult-amt" id="ma-'+i+'">'+v+'F</div>'+
+    '</div>';
+    if(i<vals.length-1)html+='<div class="mult-line" id="ml-'+i+'"></div>';
+  });
+  track.innerHTML=html;
+  updateMultTrack(0);
+}
+
+function updateMultTrack(current){
+  for(var i=0;i<10;i++){
+    var mc=document.getElementById('mc-'+i);
+    var ma=document.getElementById('ma-'+i);
+    var ml=document.getElementById('ml-'+i);
+    if(mc){
+      mc.className='mult-circle'+(i<current?' done':i===current?' current':'');
+    }
+    if(ma)ma.className='mult-amt'+(i===current?' active':'');
+    if(ml)ml.className='mult-line'+(i<current?' done':'');
+  }
+}
+
+async function startGame(){
+  if(!selectedPays){showToast('Choisissez un pays !',true);return;}
+  if(SOLDE_DEMO<selectedMise){showToast('Solde insuffisant !',true);return;}
+  
+  var btn=document.getElementById('startBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ PRÉPARATION DES QUESTIONS...';}
+  
+  gameState.pays=selectedPays;
+  gameState.mise=selectedMise;
+  gameState.currentMise=selectedMise;
+  gameState.questions=await getQuestions(selectedPays.nm);
+  gameState.current=0;
+  gameState.active=true;
+  SOLDE_DEMO-=selectedMise;
+  updateSoldeDisplay();
+  buildMultTrack(selectedMise);
+  
+  if(btn){btn.disabled=false;}
+  document.getElementById('paysSection').style.display='none';
+  document.getElementById('gameZone').style.display='block';
+  document.getElementById('resultZone').style.display='none';
+  
+  showQuestion();
+}
+
+function showQuestion(){
+  if(gameState.current>=gameState.questions.length){cashout();return;}
+  var q=gameState.questions[gameState.current];
+  document.getElementById('qNum').textContent=gameState.current+1;
+  document.getElementById('qPaysBadge').textContent=gameState.pays.flag+' '+gameState.pays.nm;
+  document.getElementById('miseActuelle').textContent=gameState.currentMise+' F';
+  updateMultTrack(gameState.current);
+  
+  var opts=q.opts.map(function(o,i){
+    return'<button class="q-opt" onclick="answer('+i+')" style="border:none;cursor:pointer">'+
+      '<span class="q-opt-letter">'+String.fromCharCode(65+i)+'</span>'+o+'</button>';
+  }).join('');
+  
+  document.getElementById('questionCard').innerHTML=
+    '<div class="q-text">'+q.q+'</div>'+
+    '<div class="q-options">'+opts+'</div>';
+  
+  // Start timer
+  gameState.timeLeft=10;
+  var timerEl=document.getElementById('timerText');
+  var timerCircle=document.getElementById('timerCircle');
+  var timerWrap=document.querySelector('.timer-wrap');
+  var circumference=220;
+  
+  if(gameState.timer)clearInterval(gameState.timer);
+  gameState.timer=setInterval(function(){
+    gameState.timeLeft--;
+    if(timerEl)timerEl.textContent=gameState.timeLeft;
+    var offset=circumference*(1-gameState.timeLeft/10);
+    if(timerCircle)timerCircle.style.strokeDashoffset=offset;
+    if(gameState.timeLeft<=3){
+      if(timerWrap)timerWrap.classList.add('timer-danger');
+    }
+    if(gameState.timeLeft<=0){
+      clearInterval(gameState.timer);
+      gameOver(false);
+    }
+  },1000);
+}
+
+function answer(idx){
+  if(!gameState.active)return;
+  clearInterval(gameState.timer);
+  var timerWrap=document.querySelector('.timer-wrap');
+  if(timerWrap)timerWrap.classList.remove('timer-danger');
+  
+  var q=gameState.questions[gameState.current];
+  var btns=document.querySelectorAll('.q-opt');
+  btns.forEach(function(b,i){
+    b.disabled=true;b.style.cursor='default';
+    if(i===q.answer){b.classList.add('correct');}
+    else if(i===idx&&idx!==q.answer){b.classList.add('wrong');}
+  });
+  
+  if(idx===q.answer){
+    // Correct !
+    gameState.currentMise*=2;
+    showToast('✓ Bonne réponse ! Mise : '+gameState.currentMise+' F');
+    gameState.current++;
+    setTimeout(function(){
+      if(gameState.current>=gameState.questions.length){cashout();}
+      else{showQuestion();}
+    },1200);
+  } else {
+    // Wrong !
+    setTimeout(function(){gameOver(false);},1000);
+  }
+}
+
+function cashout(){
+  clearInterval(gameState.timer);
+  gameState.active=false;
+  var gain=gameState.currentMise;
+  SOLDE_DEMO+=gain;
+  GAINS_DEMO+=gain-gameState.mise;
+  updateSoldeDisplay();
+  showResult(true,gain);
+}
+
+function gameOver(win){
+  clearInterval(gameState.timer);
+  gameState.active=false;
+  var timerWrap=document.querySelector('.timer-wrap');
+  if(timerWrap)timerWrap.classList.remove('timer-danger');
+  if(win){
+    cashout();
+  } else {
+    showToast('✗ Mauvaise réponse !',true);
+    setTimeout(function(){showResult(false,0);},600);
+  }
+}
+
+function showResult(win,gain){
+  document.getElementById('gameZone').style.display='none';
+  var rz=document.getElementById('resultZone');
+  rz.style.display='block';
+  
+  if(win){
+    rz.innerHTML='<div class="result-card win">'+
+      '<span class="result-ico">🏆</span>'+
+      '<div class="result-title win">BRAVO !</div>'+
+      '<div class="result-amt win">+'+gain+' F</div>'+
+      '<div class="result-sub">'+gameState.pays.flag+' '+gameState.pays.nm+' · Question '+(gameState.current)+'/'+gameState.questions.length+'<br>Votre solde : <strong style="color:var(--or)">'+SOLDE_DEMO+' F</strong></div>'+
+      '<button class="btn-action" onclick="replay()" style="margin-top:4px">🎯 REJOUER</button>'+
+      '<button class="btn-outline" onclick="openM(\'depot\')">💰 DÉPOSER POUR GAGNER PLUS</button>'+
+    '</div>';
+  } else {
+    rz.innerHTML='<div class="result-card">'+
+      '<span class="result-ico">💀</span>'+
+      '<div class="result-title lose">PERDU</div>'+
+      '<div class="result-amt lose">−'+gameState.mise+' F</div>'+
+      '<div class="result-sub">'+gameState.pays.flag+' '+gameState.pays.nm+' · Mis hors jeu à la question '+(gameState.current+1)+'<br>Solde restant : <strong style="color:var(--or)">'+SOLDE_DEMO+' F</strong></div>'+
+      '<button class="btn-action" onclick="replay()">🔄 RÉESSAYER</button>'+
+      '<button class="btn-outline" onclick="openM(\'depot\')">💰 RECHARGER MON SOLDE</button>'+
+    '</div>';
+  }
+}
+
+function replay(){
+  document.getElementById('paysSection').style.display='block';
+  document.getElementById('gameZone').style.display='none';
+  document.getElementById('resultZone').style.display='none';
+  document.querySelectorAll('.pays-card').forEach(function(c){
+    c.style.border='1px solid rgba(255,255,255,.07)';
+    c.style.background='rgba(255,255,255,.04)';
+  });
+  selectedPays=null;
+  var btn=document.getElementById('startBtn');
+  if(btn){btn.disabled=true;btn.textContent="CHOISISSEZ UN PAYS D'ABORD";}
+}
+
+function updateSoldeDisplay(){
+  document.getElementById('soldeDemo').textContent=SOLDE_DEMO.toLocaleString('fr')+' F';
+  var g=GAINS_DEMO;
+  document.getElementById('gainsDemo').textContent=(g>=0?'+':'')+g.toLocaleString('fr')+' F';
+  document.getElementById('gainsDemo').style.color=g>=0?'#10B981':'var(--rouge)';
+  var hdrAmt=document.getElementById('hdrSoldeAmt');
+  if(hdrAmt)hdrAmt.textContent=SOLDE_DEMO.toLocaleString('fr');
+}
+
+// MODALS
+function buildModals(){
+  var html=`<div class="mover" id="mo-auth">
+<div class="modal">
+  <div class="m-hdl"></div><button class="m-x" onclick="closeM('auth')">✕</button>
+  <h2>REJOINDRE MONDO QUIZ</h2>
+  <p class="m-desc">Créez votre compte pour jouer avec de l'argent réel et retirer vos gains via MTN MoMo ou Moov Money.</p>
+  <input type="text" class="auth-in" id="a-u" placeholder="Votre nom (ex: Kossi Ahouansou)">
+  <input type="tel" class="auth-in" id="a-t" placeholder="Numéro de téléphone (ex: 97123456)">
+  <input type="password" class="auth-in" id="a-p" placeholder="Créez un mot de passe (min 6 caractères)">
+  <select class="auth-in" id="a-op">
+    <option value="">-- Votre réseau Mobile Money --</option>
+    <option>MTN MoMo</option><option>Moov Money</option><option>Celtiis</option>
+  </select>
+  <button class="btn-action" onclick="doAuth()">🎯 CRÉER MON COMPTE</button>
+  <div style="margin-top:12px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.1);border-radius:12px;padding:12px;font-size:.74rem;color:var(--muted);line-height:1.7">
+    🎁 <strong style="color:var(--or)">Bonus de bienvenue :</strong> 500 FCFA offerts sur votre premier dépôt<br>
+    🔐 Paiements sécurisés · Retrait immédiat<br>
+    ⚠️ Jeu réservé aux majeurs (18+)
+  </div>
+</div></div>
+
+<div class="mover" id="mo-depot">
+<div class="modal">
+  <div class="m-hdl"></div><button class="m-x" onclick="closeM('depot')">✕</button>
+  <h2>DÉPOSER DES FONDS</h2>
+  <p class="m-desc">Min : 200 FCFA · Max : 20 000 FCFA. Crédit instantané sur votre solde.</p>
+
+  <div class="ps on" id="dps1">
+    <div class="dep-opts">
+      <div class="dep-opt sel" onclick="selDep(this,200)"><div class="dep-amt-big">200F</div><div class="dep-lbl">Minimum</div></div>
+      <div class="dep-opt" onclick="selDep(this,500)"><div class="dep-amt-big">500F</div><div class="dep-lbl">Standard</div></div>
+      <div class="dep-opt" onclick="selDep(this,1000)"><div class="dep-amt-big">1000F</div><div class="dep-lbl">Joueur</div></div>
+      <div class="dep-opt" onclick="selDep(this,2000)"><div class="dep-amt-big">2000F</div><div class="dep-lbl">Sérieux</div></div>
+      <div class="dep-opt" onclick="selDep(this,5000)"><div class="dep-amt-big">5000F</div><div class="dep-lbl">Pro</div></div>
+      <div class="dep-opt" onclick="selDep(this,20000)"><div class="dep-amt-big">20K</div><div class="dep-lbl">Maximum</div></div>
+    </div>
+    <p style="font-size:.76rem;color:var(--muted);margin-bottom:7px;font-weight:600">Choisissez votre réseau :</p>
+    <div class="dep-opts" style="grid-template-columns:1fr 1fr">
+      <div class="dep-opt" onclick="selDepOp('mtn',this)">📱<div class="dep-lbl">MTN MoMo</div></div>
+      <div class="dep-opt" onclick="selDepOp('moov',this)">📲<div class="dep-lbl">Moov Money</div></div>
+      <div class="dep-opt" onclick="selDepOp('celtiis',this)">📡<div class="dep-lbl">Celtiis</div></div>
+      <div class="dep-opt" onclick="selDepOp('card',this)">💳<div class="dep-lbl">Carte</div></div>
+    </div>
+    <button class="btn-action" id="depNextBtn" onclick="goDepStep2()" disabled style="margin-top:10px">CHOISISSEZ UN RÉSEAU</button>
+  </div>
+
+  <div class="ps" id="dps2">
+    <div style="background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.15);border-radius:12px;padding:13px;margin-bottom:12px;text-align:center">
+      <div class="dep-lbl" style="margin-bottom:3px">MONTANT À DÉPOSER</div>
+      <div class="dep-amt-big" style="font-size:1.6rem" id="depConfirmAmt">200F</div>
+    </div>
+    <div id="depTelWrap">
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:9px">
+        <div style="background:rgba(255,215,0,.05);border:1.5px solid rgba(255,215,0,.15);border-radius:9px;padding:11px 12px;font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted)">+229</div>
+        <input type="tel" class="auth-in" id="depTel" placeholder="97 12 34 56" maxlength="10" style="margin-bottom:0">
+      </div>
+      <div style="font-size:.68rem;color:var(--muted);margin-bottom:10px">Vous recevrez une notification push sur ce numéro.</div>
+    </div>
+    <button class="btn-action" onclick="confirmDepStep2()">💸 ENVOYER LA DEMANDE</button>
+    <button class="btn-outline" onclick="goDepStep(1)">← Retour</button>
+  </div>
+
+  <div class="ps" id="dps3" style="text-align:center">
+    <div style="font-size:2rem;margin-bottom:8px" id="depPushIco">📳</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--or);letter-spacing:1px;margin-bottom:6px" id="depPushStatus">Demande envoyée...</div>
+    <div style="font-size:.74rem;color:var(--muted);margin-bottom:16px;line-height:1.7">Entrez votre code PIN Mobile Money pour valider le dépôt.</div>
+    <button class="btn-action" onclick="confirmDepFinal()">✅ J'AI CONFIRMÉ LE PAIEMENT</button>
+  </div>
+
+  <div class="ps" id="dps4" style="text-align:center;display:none">
+    <div style="font-size:3rem;margin-bottom:10px">✅</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--or);letter-spacing:2px;margin-bottom:6px">DÉPÔT RÉUSSI</div>
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:16px">Votre solde a été rechargé avec succès.</div>
+    <button class="btn-action" onclick="closeM('depot')">🎯 JOUER MAINTENANT</button>
+  </div>
+
+  <div style="margin-top:13px;font-size:.7rem;color:var(--muted);text-align:center;line-height:1.7">
+    🔐 Paiement 100% anonyme · "MONDO QUIZ" sur votre reçu
+  </div>
+</div></div>
+
+<div class="mover" id="mo-retrait">
+<div class="modal">
+  <div class="m-hdl"></div><button class="m-x" onclick="closeM('retrait')">✕</button>
+  <h2>RETIRER MES GAINS</h2>
+  <p class="m-desc">Retrait disponible vers Mobile Money. Délai : instantané à 24h.</p>
+
+  <div class="ps on" id="wps1">
+    <div class="solde-bar" style="margin-bottom:13px">
+      <div><div class="solde-lbl">SOLDE DISPONIBLE</div><div class="solde-amt" id="wAvailable">0 F</div></div>
+    </div>
+    <input type="number" class="auth-in" id="wAmount" placeholder="Montant à retirer (FCFA)" min="200">
+    <p style="font-size:.7rem;color:var(--muted);margin-bottom:10px">Retrait minimum : 200 FCFA</p>
+    <p style="font-size:.76rem;color:var(--muted);margin-bottom:7px;font-weight:600">Vers quel réseau ?</p>
+    <div class="dep-opts" style="grid-template-columns:1fr 1fr;margin-bottom:10px">
+      <div class="dep-opt" onclick="selWOp('mtn',this)">📱<div class="dep-lbl">MTN MoMo</div></div>
+      <div class="dep-opt" onclick="selWOp('moov',this)">📲<div class="dep-lbl">Moov Money</div></div>
+      <div class="dep-opt" onclick="selWOp('celtiis',this)">📡<div class="dep-lbl">Celtiis</div></div>
+      <div class="dep-opt" onclick="selWOp('card',this)">💳<div class="dep-lbl">Virement carte</div></div>
+    </div>
+    <input type="tel" class="auth-in" id="wTel" placeholder="Numéro de réception (+229...)">
+    <button class="btn-action" onclick="doWithdraw()">💸 DEMANDER LE RETRAIT</button>
+  </div>
+
+  <div class="ps" id="wps2" style="text-align:center;display:none">
+    <div style="font-size:2.5rem;margin-bottom:10px">⏳</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--or);letter-spacing:2px;margin-bottom:8px">RETRAIT EN COURS</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.75" id="wSummary"></div>
+    <button class="btn-action" onclick="closeM('retrait')">OK, COMPRIS</button>
+  </div>
+</div></div>`;
+  
+  document.getElementById('modRoot').innerHTML=html;
+  document.querySelectorAll('.mover').forEach(function(o){
+    o.addEventListener('click',function(e){if(e.target===this)closeM(this.id.slice(3));});
+  });
+}
+
+// ══════════════════════════════════════
+// SYSTÈME DE DÉPÔT
+// ══════════════════════════════════════
+var depAmt=200;
+var depOp='';
+function selDep(el,amt){
+  el.parentElement.querySelectorAll('.dep-opt').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');depAmt=amt;
+}
+function selDepOp(op,el){
+  el.parentElement.querySelectorAll('.dep-opt').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');depOp=op;
+  var btn=document.getElementById('depNextBtn');
+  var names={mtn:'MTN MoMo',moov:'Moov Money',celtiis:'Celtiis',card:'Carte Bancaire'};
+  if(btn){btn.disabled=false;btn.textContent='CONTINUER AVEC '+names[op];}
+}
+function goDepStep(n){
+  ['dps1','dps2','dps3'].forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(el)el.className='ps'+((i+1)===n?' on':'');
+  });
+}
+function goDepStep2(){
+  if(!depOp){showToast('Choisissez un réseau !',true);return;}
+  document.getElementById('depConfirmAmt').textContent=depAmt+'F';
+  var telWrap=document.getElementById('depTelWrap');
+  if(telWrap)telWrap.style.display=depOp==='card'?'none':'block';
+  goDepStep(2);
+}
+function confirmDepStep2(){
+  if(depOp!=='card'){
+    var tel=(document.getElementById('depTel')||{}).value||'';
+    if(!tel||tel.replace(/\D/g,'').length<8){showToast('Numéro invalide !',true);return;}
+  }
+  goDepStep(3);
+  var ico=document.getElementById('depPushIco');
+  var st=document.getElementById('depPushStatus');
+  var i=0,fr=['📳','🔔','📱','🔔'];
+  var iv=setInterval(function(){if(ico)ico.textContent=fr[i++%fr.length];if(i>10)clearInterval(iv);},380);
+  if(st)st.textContent=depOp==='card'?'Lien de paiement sécurisé envoyé...':'Demande envoyée — entrez votre PIN';
+}
+function confirmDepFinal(){
+  SOLDE_DEMO+=depAmt;
+  updateSoldeDisplay();
+  saveTransaction('depot',depAmt);
+  document.getElementById('dps3').className='ps';
+  document.getElementById('dps4').style.display='block';
+  showToast('✅ Dépôt de '+depAmt+'F réussi !');
+}
+
+// ══════════════════════════════════════
+// SYSTÈME DE RETRAIT
+// ══════════════════════════════════════
+var wOp='';
+function selWOp(op,el){
+  el.parentElement.querySelectorAll('.dep-opt').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');wOp=op;
+}
+function doWithdraw(){
+  var amt=parseInt((document.getElementById('wAmount')||{}).value||0);
+  var tel=(document.getElementById('wTel')||{}).value||'';
+  if(!amt||amt<200){showToast('Montant minimum : 200 FCFA',true);return;}
+  if(amt>SOLDE_DEMO){showToast('Solde insuffisant !',true);return;}
+  if(!wOp){showToast('Choisissez un réseau de réception !',true);return;}
+  if(!tel){showToast('Entrez votre numéro de réception !',true);return;}
+  SOLDE_DEMO-=amt;
+  updateSoldeDisplay();
+  saveTransaction('retrait',amt);
+  document.getElementById('wps1').className='ps';
+  document.getElementById('wps1').style.display='none';
+  document.getElementById('wps2').style.display='block';
+  var names={mtn:'MTN MoMo',moov:'Moov Money',celtiis:'Celtiis',card:'Carte'};
+  document.getElementById('wSummary').innerHTML='Retrait de <strong style="color:var(--or)">'+amt+' FCFA</strong> vers '+(names[wOp]||wOp)+'<br>au numéro <strong style="color:var(--or)">'+tel+'</strong><br><br>Traitement sous 24h maximum.';
+  showToast('⏳ Demande de retrait envoyée !');
+}
+
+// TRANSACTION HISTORY (persisted)
+function saveTransaction(type,amt){
+  var hist=[];
+  try{hist=JSON.parse(localStorage.getItem('mq_history')||'[]');}catch(e){}
+  hist.unshift({type:type,amount:amt,date:new Date().toISOString(),balance:SOLDE_DEMO});
+  localStorage.setItem('mq_history',JSON.stringify(hist.slice(0,50)));
+  localStorage.setItem('mq_solde',SOLDE_DEMO.toString());
+}
+
+function doAuth(){
+  var u=(document.getElementById('a-u')||{}).value||'';
+  var t=(document.getElementById('a-t')||{}).value||'';
+  var p=(document.getElementById('a-p')||{}).value||'';
+  if(!u||!t||!p||p.length<6){showToast('Remplissez tous les champs !',true);return;}
+  USER={u:u,tel:t};localStorage.setItem('mq_user',JSON.stringify(USER));
+  closeM('auth');
+  showToast('🎉 Bienvenue '+u+' ! Déposez pour jouer.');
+  document.getElementById('hdrSolde').style.display='flex';
+}
+
+function openM(id){
+  var el=document.getElementById('mo-'+id);
+  if(el){
+    el.classList.add('on');document.body.style.overflow='hidden';
+    if(id==='retrait'){
+      var av=document.getElementById('wAvailable');
+      if(av)av.textContent=SOLDE_DEMO.toLocaleString('fr')+' F';
+      document.getElementById('wps1').style.display='block';
+      document.getElementById('wps2').style.display='none';
+    }
+    if(id==='depot'){
+      goDepStep(1);
+      document.getElementById('dps4').style.display='none';
+      depOp='';
+      var btn=document.getElementById('depNextBtn');
+      if(btn){btn.disabled=true;btn.textContent='CHOISISSEZ UN RÉSEAU';}
+    }
+  }
+}
+function closeM(id){var el=document.getElementById('mo-'+id);if(el){el.classList.remove('on');document.body.style.overflow='';}}
+
+
+
+// GLOBE CATEGORIES
+var GLOBE_THEMES = {
+  geo: 'géographie physique mondiale : détroits, abysses, falaises, monolithes, mers, océans, déserts, forêts, ères géologiques, sommets naturels et artificiels',
+  antiquite: "Antiquité et civilisations : empires, dynasties, royaumes, conquêtes maritimes, grandes familles fortunées, traite négrière, dynasties chinoises et égyptiennes",
+  arts: 'arts et culture mondiale : peintres célèbres, sculpteurs, musiciens légendaires, acteurs cinématographiques, chanteurs internationaux',
+  sport: 'sport et records mondiaux : stars sportives internationales, records olympiques, stades FIFA, champions du monde toutes disciplines',
+  guerres: 'guerres et conflits mondiaux : Première et Seconde Guerre Mondiale, guerre de Corée, Vietnam, génocide rwandais, apartheid Afrique du Sud, guerre de Sécession américaine',
+  espace: 'conquête spatiale et maritime : grandes découvertes, géants des mers, exploration lunaire et planétaire'
+};
+
+async function startGlobeCategory(cat) {
+  if(!selectedPays) {
+    // For globe, no country needed
+    selectedPays = {flag:'🌐', nm:'Monde'};
+  }
+  var theme = GLOBE_THEMES[cat] || 'culture générale mondiale';
+  document.getElementById('paysSection').style.display='none';
+  document.getElementById('gameZone').style.display='block';
+  
+  try {
+    var prompt = 'Génère 5 questions QCM DIFFICILES sur la thématique : ' + theme + '.\nChaque question doit être précise, factuelle et vérifiable.\nFormat JSON uniquement:\n[{"q":"Question précise?","opts":["A","B","C","D"],"answer":0,"exp":"Explication factuelle courte"}]\nanswer=index bonne réponse (0-3). JSON pur sans markdown.';
+    var r = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,messages:[{role:"user",content:prompt}]})
+    });
+    var j = await r.json();
+    var txt = j.content ? j.content.map(function(c){return c.text||'';}).join('') : '[]';
+    gameState.questions = JSON.parse(txt.replace(/```json|```/g,'').trim());
+  } catch(e) {
+    gameState.questions = DEFAULT_Q;
+  }
+  
+  gameState.pays = selectedPays;
+  gameState.mise = selectedMise;
+  gameState.currentMise = selectedMise;
+  gameState.current = 0;
+  gameState.active = true;
+  SOLDE_DEMO -= selectedMise;
+  updateSoldeDisplay();
+  buildMultTrack(selectedMise);
+  showQuestion();
+}
+
+// ══════════════════════════════════════
+// PROTECTION ANTI-CAPTURE / ANTI-TRICHE
+// ══════════════════════════════════════
+
+// 1. Disable right click
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+// 2. Disable keyboard shortcuts (F12, Ctrl+S, Ctrl+U, Ctrl+Shift+I, PrintScreen)
+document.addEventListener('keydown', function(e) {
+  // F12
+  if(e.key === 'F12') { e.preventDefault(); return false; }
+  // Ctrl+Shift+I (DevTools)
+  if(e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+  // Ctrl+Shift+J (Console)
+  if(e.ctrlKey && e.shiftKey && e.key === 'J') { e.preventDefault(); return false; }
+  // Ctrl+U (View source)
+  if(e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+  // Ctrl+S (Save)
+  if(e.ctrlKey && e.key === 's') { e.preventDefault(); return false; }
+  // PrintScreen
+  if(e.key === 'PrintScreen') {
+    e.preventDefault();
+    // Temporarily blank the screen
+    document.body.style.visibility = 'hidden';
+    setTimeout(function() { document.body.style.visibility = 'visible'; }, 300);
+    return false;
+  }
+});
+
+// 3. Detect tab/window focus loss during active game
+var blurPaused = false;
+var blurTimer = null;
+
+document.addEventListener('visibilitychange', function() {
+  if(document.hidden && gameState.active) {
+    pauseForBlur();
+  }
+});
+
+window.addEventListener('blur', function() {
+  if(gameState.active) {
+    pauseForBlur();
+  }
+});
+
+window.addEventListener('focus', function() {
+  // Don't auto-resume - user must click button
+});
+
+function pauseForBlur() {
+  if(blurPaused) return;
+  blurPaused = true;
+  // Pause timer
+  if(gameState.timer) clearInterval(gameState.timer);
+  // Show blur overlay
+  document.getElementById('blurOverlay').classList.add('on');
+  // Blank the question card
+  var qc = document.getElementById('questionCard');
+  if(qc) qc.style.filter = 'blur(20px)';
+  showToast('⚠️ Partie suspendue — focus perdu !', true);
+}
+
+function resumeGame() {
+  blurPaused = false;
+  document.getElementById('blurOverlay').classList.remove('on');
+  var qc = document.getElementById('questionCard');
+  if(qc) qc.style.filter = '';
+  if(gameState.active && gameState.timeLeft > 0) {
+    // Resume timer from where it left off (penalize 3 seconds)
+    gameState.timeLeft = Math.max(1, gameState.timeLeft - 3);
+    // Restart timer
+    var timerEl = document.getElementById('timerText');
+    var timerCircle = document.getElementById('timerCircle');
+    var timerWrap = document.querySelector('.timer-wrap');
+    var circumference = 220;
+    gameState.timer = setInterval(function() {
+      gameState.timeLeft--;
+      if(timerEl) timerEl.textContent = gameState.timeLeft;
+      var offset = circumference * (1 - gameState.timeLeft / 10);
+      if(timerCircle) timerCircle.style.strokeDashoffset = offset;
+      if(gameState.timeLeft <= 3) {
+        if(timerWrap) timerWrap.classList.add('timer-danger');
+      }
+      if(gameState.timeLeft <= 0) {
+        clearInterval(gameState.timer);
+        gameOver(false);
+      }
+    }, 1000);
+    showToast('▶ Partie reprise — −3 secondes de pénalité !', true);
+  }
+}
+
+// 4. Dynamic watermark on question text
+function addWatermark() {
+  var qc = document.getElementById('questionCard');
+  if(!qc) return;
+  // Add invisible watermark with user session
+  var wm = document.createElement('div');
+  wm.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:2;overflow:hidden;border-radius:inherit';
+  var ts = new Date().toISOString();
+  wm.innerHTML = '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-family:Space Mono,monospace;font-size:.45rem;color:rgba(255,215,0,.03);letter-spacing:3px;white-space:nowrap;text-align:center">MONDO QUIZ · SESSION ' + ts.slice(0,16) + ' · PROTÉGÉ</div>';
+  qc.style.position = 'relative';
+  // Remove old watermark if exists
+  var old = qc.querySelector('.wm');
+  if(old) old.remove();
+  wm.className = 'wm';
+  qc.appendChild(wm);
+}
+
+// 5. CSS protection - make selection impossible
+var selStyle = document.createElement('style');
+selStyle.textContent = '* { -webkit-touch-callout: none; } body { -webkit-user-select: none; user-select: none; }';
+document.head.appendChild(selStyle);
+
+// Override showQuestion to add watermark
+var origShowQ = showQuestion;
+showQuestion = function() {
+  origShowQ();
+  setTimeout(addWatermark, 100);
+};
+
+// INIT
+buildModals();
+buildMultTrack(25);
+updateSoldeDisplay();
+</script>
+</body>
+</html>
